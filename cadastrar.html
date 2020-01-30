@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+<script>
+
+    function btn_enviar() {
+
+        var formData = JSON.stringify({
+                            sigla: document.getElementById('sigla').value,
+                            nome: document.getElementById('nome').value,
+                            imagem: document.getElementById('imagem').value,
+                        })
+
+        var request = new XMLHttpRequest();
+        
+        request.open("POST", "http://localhost:3000/estado");
+        request.setRequestHeader("Content-Type", "application/json");
+        request.send(formData);
+
+        window.location = "listar.html";
+
+}
+</script>
+<title>Cadastro</title>
+<body>
+    <h1>Cadastro de estados</h1>
+    <form id="formulario" name="formulario" >
+    
+    Sigla: <input type="text" name="sigla" id="sigla"><br><br>
+    Nome: <input type="text" name="nome" id="nome"><br><br>
+    Imagem: <input type="text" name="imagem" id="imagem"><br><br>
+
+    <!--https://jaguarparade.com/wp-content/uploads/2019/08/Post-Blog-Jaguar-2.png-->
+
+    <button type="button" onclick="btn_enviar();">cadastrar</button>
+
+    </form>
+
+</body>
+</html>

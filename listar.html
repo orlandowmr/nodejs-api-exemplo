@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+
+<title>Listar</title>
+
+<script>
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "http://localhost:3000/estado", true);
+    ajax.send();
+
+    ajax.onreadystatechange = function() {
+        
+        if (this.readyState == 4 && ajax.status == 200) {
+            var data = JSON.parse(ajax.responseText);
+
+            console.log(data);
+
+            for (var key in data) {
+                console.log(data[key]);
+
+                var myHtmlContent = `<tr><td><button type='button' onclick="btn_remover('`+data[key].sigla+`');">X</button></td><td>`+ data[key].sigla+ `</td><td>`+data[key].nome+`</td><td><img width='300px' height='300px' src='`+data[key].imagem+`'></td></tr>`;
+                var tableRef = document.getElementById('tabela').getElementsByTagName('tbody')[0];
+
+                var newRow = tableRef.insertRow(tableRef.rows.length);
+                newRow.innerHTML = myHtmlContent;
+            }
+        }
+    }
+
+    function btn_remover(sigla) {
+
+        var x = new XMLHttpRequest();
+
+        alert('O estado ' + sigla + ' será removido!');
+        
+        x.open("DELETE", "http://localhost:3000/estado/"+sigla, false);
+        x.send();
+
+        window.location = "listar.html";
+
+    }
+</script>
+
+<body>
+    <h1>Lista de estados</h1>
+   
+    <table border="1px" id="tabela" name="tabela">
+        <tr><td><b>Remover</b></td><td><b>Sigla</b></td><td><b>Nome</b></td><td><b>Imagem</b></td></tr>
+    </table>
+
+</body>
+</html>
